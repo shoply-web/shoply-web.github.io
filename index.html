@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مخللات البحرين</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for social media icons and star ratings -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(2px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #fff;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 90%;
+            text-align: right;
+            position: relative;
+        }
+        .modal-close-btn {
+            position: absolute;
+            top: 0.5rem;
+            left: 0.5rem;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #6b7280;
+            transition: color 0.2s;
+        }
+        .modal-close-btn:hover {
+            color: #ef4444;
+        }
+        .rating-star {
+            color: #f59e0b;
+        }
+        .rating-empty-star {
+            color: #d1d5db;
+        }
+        .cart-icon-container {
+            position: relative;
+        }
+        .cart-counter {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #ef4444;
+            color: white;
+            border-radius: 9999px;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Header Section -->
+    <header class="bg-white shadow-lg p-4 sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-2 space-x-reverse">
+                <!-- SVG Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c1.657 0 3 1.343 3 3s-1.343 3-3 3-3-1.343-3-3 1.343-3 3-3z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4c1.657 0 3 1.343 3 3s-1.343 3-3 3-3-1.343-3-3 1.343-3 3-3z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 20c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3z"/>
+                </svg>
+                <h1 class="text-2xl font-bold text-gray-800">مخللات البحرين</h1>
+            </div>
+            <nav class="flex items-center space-x-4 space-x-reverse">
+                <a href="#about" class="text-gray-600 hover:text-amber-500 transition-colors">عنا</a>
+                <a href="#products" class="text-gray-600 hover:text-amber-500 transition-colors">منتجاتنا</a>
+                <a href="#payment" class="text-gray-600 hover:text-amber-500 transition-colors">طرق الدفع</a>
+                <button id="cart-btn" class="cart-icon-container relative hover:text-amber-500 transition-colors">
+                    <i class="fas fa-shopping-cart text-2xl"></i>
+                    <span id="cart-counter" class="cart-counter hidden">0</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="bg-amber-100 py-16">
+            <div class="container mx-auto flex flex-col md:flex-row items-center justify-between px-4">
+                <div class="md:w-1/2 text-center md:text-right">
+                    <h2 class="text-4xl md:text-5xl font-extrabold text-amber-800 leading-tight mb-4">
+                        آجارنا شغل عدل!
+                    </h2>
+                    <p class="text-lg text-gray-700 mb-6">
+                        نقدم لكم أجار بيتي من خيرات البحرين، طازج ولذيذ.
+                    </p>
+                    <a href="#products" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105">
+                        اكتشف المنتجات
+                    </a>
+                </div>
+                <div class="md:w-1/2 mt-8 md:mt-0">
+                    <img src="https://i.postimg.cc/MTfKqCWW/Screenshot-Instagram.png" alt="اجار بحريني" class="rounded-lg shadow-lg w-full h-auto"/>
+                </div>
+            </div>
+        </section>
+
+        <!-- Delivery Section - New -->
+        <section class="bg-white py-8">
+            <div class="container mx-auto px-4 flex justify-center items-center">
+                <div class="bg-green-50 rounded-full py-2 px-6 flex items-center space-x-2 space-x-reverse shadow-inner">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span class="text-lg font-semibold text-gray-700">توصيل المنتج سيكون خلال أقل من 24 ساعة</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Section -->
+        <section id="products" class="py-16 bg-gray-100">
+            <div class="container mx-auto px-4">
+                <h3 class="text-3xl font-bold text-center text-gray-800 mb-8">منتجاتنا</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Product 1 (Ajr Khudar with sizes) -->
+                    <div class="bg-white rounded-lg shadow-lg p-6 text-center transition-transform transform hover:scale-105" data-product="أجار خضار" data-price="1.000">
+                        <img src="https://i.postimg.cc/t4KdNjY6/Screenshot-Instagram.png" alt="أجار خضار" class="w-full h-48 object-cover rounded-lg mb-4"/>
+                        <h4 class="text-xl font-bold text-gray-800 mb-2">أجار خضار</h4>
+                        <p class="text-gray-600 mb-2">يضبط لك كل الأكلات، شي ما يتطوف.</p>
+                        <div class="flex items-center justify-center space-x-4 space-x-reverse mb-4">
+                            <label class="flex items-center space-x-2 space-x-reverse cursor-pointer">
+                                <input type="radio" name="size-khudar" value="1.000" data-size-name="حجم صغير" class="form-radio text-amber-500 h-4 w-4" checked>
+                                <span class="text-gray-700">حجم صغير (1.000 د.ب)</span>
+                            </label>
+                            <label class="flex items-center space-x-2 space-x-reverse cursor-pointer">
+                                <input type="radio" name="size-khudar" value="1.500" data-size-name="حجم كبير" class="form-radio text-amber-500 h-4 w-4">
+                                <span class="text-gray-700">حجم كبير (1.500 د.ب)</span>
+                            </label>
+                        </div>
+                        <span class="text-sm text-gray-500 block mb-4">سعر التوصيل 2.000 د.ب</span>
+                        <div class="flex flex-col space-y-2 mt-4">
+                            <button class="add-to-cart-btn bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105">
+                                أضف إلى السلة
+                            </button>
+                            <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-1 px-2 rounded-full flex items-center justify-center rating-btn" aria-label="عرض التقييمات">
+                                <span class="ml-2 text-sm">التقييمات</span>
+                                <i class="fas fa-chevron-up transition-transform duration-300 transform"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Product 2 (Ajr Mango) -->
+                    <div class="bg-white rounded-lg shadow-lg p-6 text-center transition-transform transform hover:scale-105" data-product="أجار مانجو" data-price="1.500">
+                        <img src="https://i.postimg.cc/8z9fgmGg/Screenshot-Instagram.png" alt="أجار مانجو" class="w-full h-48 object-cover rounded-lg mb-4"/>
+                        <h4 class="text-xl font-bold text-gray-800 mb-2">أجار مانجو</h4>
+                        <p class="text-gray-600 mb-2">حامض وحار، حق اللي يحبون النكهة القوية.</p>
+                        <span class="text-2xl font-bold text-amber-500 block">1.500 د.ب</span>
+                        <span class="text-sm text-gray-500 block mb-4">سعر التوصيل 2.000 د.ب</span>
+                        <div class="flex flex-col space-y-2 mt-4">
+                            <button class="add-to-cart-btn bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105">
+                                أضف إلى السلة
+                            </button>
+                            <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-1 px-2 rounded-full flex items-center justify-center rating-btn" aria-label="عرض التقييمات">
+                                <span class="ml-2 text-sm">التقييمات</span>
+                                <i class="fas fa-chevron-up transition-transform duration-300 transform"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Product 3 (Ajr Garlic) -->
+                    <div class="bg-white rounded-lg shadow-lg p-6 text-center transition-transform transform hover:scale-105" data-product="أجار ثوم جبلي" data-price="2.000">
+                        <img src="https://i.postimg.cc/W1hS788B/Screenshot-Instagram.png" alt="أجار ثوم جبلي" class="w-full h-48 object-cover rounded-lg mb-4"/>
+                        <h4 class="text-xl font-bold text-gray-800 mb-2">أجار ثوم جبلي</h4>
+                        <p class="text-gray-600 mb-2">نكهة الثوم القوية اللي تحبها، توديك في عالم ثاني.</p>
+                        <span class="text-2xl font-bold text-amber-500 block">2.000 د.ب</span>
+                        <span class="text-sm text-gray-500 block mb-4">سعر التوصيل 2.000 د.ب</span>
+                        <div class="flex flex-col space-y-2 mt-4">
+                            <button class="add-to-cart-btn bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105">
+                                أضف إلى السلة
+                            </button>
+                            <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-1 px-2 rounded-full flex items-center justify-center rating-btn" aria-label="عرض التقييمات">
+                                <span class="ml-2 text-sm">التقييمات</span>
+                                <i class="fas fa-chevron-up transition-transform duration-300 transform"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Product 4 (Ajr Beetroot) -->
+                    <div class="bg-white rounded-lg shadow-lg p-6 text-center transition-transform transform hover:scale-105" data-product="أجار شمندر" data-price="1.000">
+                        <img src="https://i.postimg.cc/Yjc2ybgd/Screenshot-Instagram.png" alt="أجار شمندر" class="w-full h-48 object-cover rounded-lg mb-4"/>
+                        <h4 class="text-xl font-bold text-gray-800 mb-2">أجار شمندر</h4>
+                        <p class="text-gray-600 mb-2">لون وطعم وشكل، كل شي فيه يفتح الشهية.</p>
+                        <span class="text-2xl font-bold text-amber-500 block">1.000 د.ب</span>
+                        <span class="text-sm text-gray-500 block mb-4">سعر التوصيل 2.000 د.ب</span>
+                        <div class="flex flex-col space-y-2 mt-4">
+                            <button class="add-to-cart-btn bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105">
+                                أضف إلى السلة
+                            </button>
+                            <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-1 px-2 rounded-full flex items-center justify-center rating-btn" aria-label="عرض التقييمات">
+                                <span class="ml-2 text-sm">التقييمات</span>
+                                <i class="fas fa-chevron-up transition-transform duration-300 transform"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Product 5 (New - Garlic and Cauliflower with sizes) -->
+                    <div class="bg-white rounded-lg shadow-lg p-6 text-center transition-transform transform hover:scale-105" data-product="أجار ثوم وقرنبيط" data-price="1.500">
+                        <img src="https://i.postimg.cc/63dMvQcT/Screenshot-Instagram.png" alt="أجار ثوم وقرنبيط" class="w-full h-48 object-cover rounded-lg mb-4"/>
+                        <h4 class="text-xl font-bold text-gray-800 mb-2">أجار ثوم وقرنبيط</h4>
+                        <p class="text-gray-600 mb-2">نكهة فريدة ومميزة، مزيج يرضي جميع الأذواق.</p>
+                        <div class="flex items-center justify-center space-x-4 space-x-reverse mb-4">
+                            <label class="flex items-center space-x-2 space-x-reverse cursor-pointer">
+                                <input type="radio" name="size-garlic-cauliflower" value="1.500" data-size-name="حجم صغير" class="form-radio text-amber-500 h-4 w-4" checked>
+                                <span class="text-gray-700">حجم صغير (1.500 د.ب)</span>
+                            </label>
+                            <label class="flex items-center space-x-2 space-x-reverse cursor-pointer">
+                                <input type="radio" name="size-garlic-cauliflower" value="3.000" data-size-name="حجم كبير" class="form-radio text-amber-500 h-4 w-4">
+                                <span class="text-gray-700">حجم كبير (3.000 د.ب)</span>
+                            </label>
+                        </div>
+                        <span class="text-sm text-gray-500 block mb-4">سعر التوصيل 2.000 د.ب</span>
+                        <div class="flex flex-col space-y-2 mt-4">
+                            <button class="add-to-cart-btn bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105">
+                                أضف إلى السلة
+                            </button>
+                            <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-1 px-2 rounded-full flex items-center justify-center rating-btn" aria-label="عرض التقييمات">
+                                <span class="ml-2 text-sm">التقييمات</span>
+                                <i class="fas fa-chevron-up transition-transform duration-300 transform"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Product 6 (New - Garlic Paste) -->
+                    <div class="bg-white rounded-lg shadow-lg p-6 text-center transition-transform transform hover:scale-105" data-product="معجون ثوم" data-price="1.500">
+                        <img src="https://i.postimg.cc/ZYwMFWZy/Screenshot-Instagram.png" alt="معجون ثوم" class="w-full h-48 object-cover rounded-lg mb-4"/>
+                        <h4 class="text-xl font-bold text-gray-800 mb-2">معجون ثوم</h4>
+                        <p class="text-gray-600 mb-2">معجون ثوم طبيعي ولذيذ، يضيف نكهة غنية لأطباقك.</p>
+                        <span class="text-2xl font-bold text-amber-500 block">1.500 د.ب</span>
+                        <span class="text-sm text-gray-500 block mb-4">سعر التوصيل 2.000 د.ب</span>
+                        <div class="flex flex-col space-y-2 mt-4">
+                            <button class="add-to-cart-btn bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105">
+                                أضف إلى السلة
+                            </button>
+                            <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-1 px-2 rounded-full flex items-center justify-center rating-btn" aria-label="عرض التقييمات">
+                                <span class="ml-2 text-sm">التقييمات</span>
+                                <i class="fas fa-chevron-up transition-transform duration-300 transform"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Payment Methods Section -->
+        <section id="payment" class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <h3 class="text-3xl font-bold text-center text-gray-800 mb-8">طرق الدفع المتاحة</h3>
+                <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-8 md:space-x-reverse">
+                    <div class="p-6 rounded-lg shadow-lg bg-gray-50 text-center w-full md:w-1/2 transition-transform transform hover:scale-105">
+                        <!-- SVG Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-600 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14l6-6m-6 6l-6-6m12 12H5a2 2 0 01-2-2V7a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2z"/>
+                        </svg>
+                        <h4 class="text-xl font-semibold mb-2">الدفع عند الاستلام</h4>
+                        <p class="text-gray-600">يمكنك الدفع نقداً عند استلام طلبك.</p>
+                    </div>
+                    <div class="p-6 rounded-lg shadow-lg bg-gray-50 text-center w-full md:w-1/2 transition-transform transform hover:scale-105">
+                        <!-- SVG Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-600 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c1.657 0 3 1.343 3 3s-1.343 3-3 3-3-1.343-3-3 1.343-3 3-3z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4c1.657 0 3 1.343 3 3s-1.343 3-3 3-3-1.343-3-3 1.343-3 3-3z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 20c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3z"/>
+                        </svg>
+                        <h4 class="text-xl font-semibold mb-2">الدفع عبر BenefitPay</h4>
+                        <p class="text-gray-600">يمكنكم تحويل المبلغ على طول بعد ما تطلبون.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Us Section -->
+        <section id="about" class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <h3 class="text-3xl font-bold text-center text-gray-800 mb-8">شغل بيت، نظافة وجودة</h3>
+                <div class="flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-8 md:space-x-reverse">
+                    <div class="md:w-1/3 text-center">
+                        <div class="p-6 rounded-lg shadow-lg bg-amber-50 transition-transform transform hover:scale-105">
+                            <!-- SVG Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-amber-500 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l-4 4m8-4l-4 4"/>
+                            </svg>
+                            <h4 class="text-xl font-semibold mb-2">مكونات طازجة وجودة عالية</h4>
+                            <p class="text-gray-600">نحن نستخدم أفضل المكونات الطازجة والمحلية لضمان أعلى مستويات الجودة والنكهة.</p>
+                        </div>
+                    </div>
+                    <div class="md:w-1/3 text-center">
+                        <div class="p-6 rounded-lg shadow-lg bg-amber-50 transition-transform transform hover:scale-105">
+                            <!-- SVG Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-amber-500 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2m-9 0V3h4v2m0 0H7m0 0v2h2V5m0 0H7m0 0V3h4v2m0 0h2v2h-2V5zm0 0h2v2h-2V5zM7 7h10"/>
+                            </svg>
+                            <h4 class="text-xl font-semibold mb-2">طعم أصيل من قلب البيت</h4>
+                            <p class="text-gray-600">كل قطعة من آجارنا مصنوعة بحب وشغف، لتستمتعوا بطعم بيتي لا مثيل له.</p>
+                        </div>
+                    </div>
+                    <div class="md:w-1/3 text-center">
+                        <div class="p-6 rounded-lg shadow-lg bg-amber-50 transition-transform transform hover:scale-105">
+                            <!-- SVG Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-amber-500 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m4 0h1M5 10h14a2 2 0 012 2v7a2 2 0 01-2 2H5a2 2 0 01-2-2v-7a2 2 0 012-2z"/>
+                            </svg>
+                            <h4 class="text-xl font-semibold mb-2">توارثناها جيلاً بعد جيل</h4>
+                            <p class="text-gray-600">وصفاتنا متوارثة بعناية، مما يضمن أصالة الطعم الذي يحكي قصة تراثنا.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-300 py-6">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 مخللات البحرين. جميع الحقوق محفوظة.</p>
+            <div class="mt-4 flex justify-center items-center space-x-4 space-x-reverse">
+                <a href="https://www.instagram.com/spicy_pickles.bh" target="_blank" class="text-gray-300 hover:text-white transition-colors flex items-center space-x-2 space-x-reverse">
+                    <i class="fab fa-instagram text-2xl"></i>
+                    <span>Instagram</span>
+                </a>
+                <a href="https://wa.me/97335561833" target="_blank" class="text-gray-300 hover:text-white transition-colors flex items-center space-x-2 space-x-reverse">
+                    <i class="fab fa-whatsapp text-2xl"></i>
+                    <span>WhatsApp</span>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const RATING_MODAL = document.getElementById('rating-modal');
+            const RATING_MODAL_TITLE = document.getElementById('modal-title');
+            const RATINGS_CONTAINER = document.getElementById('ratings-container');
+            const RATING_CLOSE_BTN = document.getElementById('modal-close-btn');
+
+            const CART_BTN = document.getElementById('cart-btn');
+            const ADD_TO_CART_BTNS = document.querySelectorAll('.add-to-cart-btn');
+            const CART_COUNTER = document.getElementById('cart-counter');
+
+            let cart = [];
+            const DELIVERY_FEE = 2.000;
+            let currentCartModal = null; // Store a reference to the current cart modal
+
+            const productRatings = {
+                'أجار خضار': [
+                    { name: 'علي', rating: 5 },
+                    { name: 'فاطمة', rating: 5 },
+                    { name: 'زهراء', rating: 5 },
+                    { name: 'نرجس', rating: 5 },
+                    { name: 'جعفر', rating: 5 }
+                ],
+                'أجار مانجو': [
+                    { name: 'حسين', rating: 5 },
+                    { name: 'حسن', rating: 5 },
+                    { name: 'محمود', rating: 5 },
+                    { name: 'مهدي', rating: 5 },
+                    { name: 'حيدر', rating: 5 }
+                ],
+                'أجار ثوم جبلي': [
+                    { name: 'علي', rating: 5 },
+                    { name: 'فاطمة', rating: 5 },
+                    { name: 'زهراء', rating: 5 },
+                    { name: 'نرجس', rating: 5 },
+                    { name: 'جعفر', rating: 5 }
+                ],
+                'أجار شمندر': [
+                    { name: 'حسين', rating: 5 },
+                    { name: 'حسن', rating: 5 },
+                    { name: 'محمود', rating: 5 },
+                    { name: 'مهدي', rating: 5 },
+                    { name: 'حيدر', rating: 5 }
+                ],
+                'أجار ثوم وقرنبيط': [
+                    { name: 'زينب', rating: 5 },
+                    { name: 'مريم', rating: 5 },
+                    { name: 'محمد', rating: 5 },
+                    { name: 'يوسف', rating: 5 }
+                ],
+                'معجون ثوم': [
+                    { name: 'أحمد', rating: 5 },
+                    { name: 'صالح', rating: 5 }
+                ]
+            };
+
+            // --- Rating Modal Functions ---
+            const createStarRating = (rating) => {
+                let starsHtml = '';
+                const fullStars = Math.floor(rating);
+                const hasHalfStar = rating % 1 !== 0;
+
+                for (let i = 0; i < fullStars; i++) {
+                    starsHtml += `<i class="fas fa-star rating-star"></i>`;
+                }
+                if (hasHalfStar) {
+                    starsHtml += `<i class="fas fa-star-half-alt rating-star"></i>`;
+                }
+                for (let i = 0; i < (5 - Math.ceil(rating)); i++) {
+                    starsHtml += `<i class="far fa-star rating-empty-star"></i>`;
+                }
+                return starsHtml;
+            };
+
+            const openRatingModal = (productName, caretIcon) => {
+                const modal = document.createElement('div');
+                modal.id = 'rating-modal';
+                modal.className = `modal-overlay`;
+                modal.style.display = 'flex';
+                modal.innerHTML = `
+                    <div class="modal-content">
+                        <button id="modal-close-btn" class="modal-close-btn">&times;</button>
+                        <h4 id="modal-title" class="text-xl font-bold text-gray-800 mb-4 text-center">تقييمات ${productName}</h4>
+                        <div id="ratings-container" class="space-y-4 text-right">
+                            <!-- Ratings will be injected here by JavaScript -->
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+
+                const ratingsContainer = modal.querySelector('#ratings-container');
+                const ratings = productRatings[productName] || [];
+
+                if (ratings.length === 0) {
+                    ratingsContainer.innerHTML = '<p class="text-center text-gray-500">لا يوجد تقييمات حالياً.</p>';
+                } else {
+                    ratings.forEach(review => {
+                        const reviewElement = document.createElement('div');
+                        reviewElement.className = 'bg-gray-50 p-4 rounded-lg shadow-inner';
+                        reviewElement.innerHTML = `
+                            <div>
+                                <p class="font-bold text-gray-800">${review.name}</p>
+                                <div class="text-sm mt-1 mb-2">
+                                    ${createStarRating(review.rating)}
+                                </div>
+                            </div>
+                        `;
+                        ratingsContainer.appendChild(reviewElement);
+                    });
+                }
+                
+                modal.querySelector('#modal-close-btn').addEventListener('click', () => {
+                    modal.remove();
+                    if(caretIcon) {
+                        caretIcon.style.transform = 'rotate(0deg)';
+                    }
+                });
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.remove();
+                        if(caretIcon) {
+                           caretIcon.style.transform = 'rotate(0deg)';
+                        }
+                    }
+                });
+                if(caretIcon) {
+                    caretIcon.style.transform = 'rotate(180deg)';
+                }
+            };
+
+            document.querySelectorAll('.rating-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const productCard = e.currentTarget.closest('[data-product]');
+                    const productName = productCard.dataset.product;
+                    const caretIcon = e.currentTarget.querySelector('i');
+                    openRatingModal(productName, caretIcon);
+                });
+            });
+
+            // --- Cart Logic ---
+            const updateCartTotal = () => {
+                if (!currentCartModal) return;
+
+                const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+                const addDeliveryCheckbox = currentCartModal.querySelector('#add-delivery');
+                const finalTotal = addDeliveryCheckbox && addDeliveryCheckbox.checked ? subtotal + DELIVERY_FEE : subtotal;
+
+                currentCartModal.querySelector('#subtotal-price').textContent = `${subtotal.toFixed(3)} د.ب`;
+                currentCartModal.querySelector('#final-price').textContent = `${finalTotal.toFixed(3)} د.ب`;
+            };
+
+            const renderCart = () => {
+                if (!currentCartModal) return;
+
+                const cartItemsContainer = currentCartModal.querySelector('#cart-items');
+                const clearCartBtn = currentCartModal.querySelector('#clear-cart-btn');
+
+                cartItemsContainer.innerHTML = '';
+                if (cart.length === 0) {
+                    cartItemsContainer.innerHTML = `<p class="text-center text-gray-500">السلة فارغة</p>`;
+                    clearCartBtn.classList.add('hidden');
+                } else {
+                    cart.forEach((item, index) => {
+                        const itemElement = document.createElement('div');
+                        itemElement.className = 'flex justify-between items-center bg-gray-50 p-3 rounded-lg shadow-inner';
+                        itemElement.innerHTML = `
+                            <div>
+                                <h5 class="font-semibold text-gray-800">${item.name}</h5>
+                                <p class="text-sm text-gray-600">${item.price.toFixed(3)} د.ب</p>
+                            </div>
+                            <div class="flex items-center space-x-2 space-x-reverse">
+                                <button class="bg-gray-200 text-gray-700 w-6 h-6 rounded-full flex items-center justify-center text-lg leading-none decrease-qty" data-index="${index}">-</button>
+                                <span class="font-bold text-gray-800">${item.quantity}</span>
+                                <button class="bg-gray-200 text-gray-700 w-6 h-6 rounded-full flex items-center justify-center text-lg leading-none increase-qty" data-index="${index}">+</button>
+                                <button class="text-red-500 hover:text-red-700 delete-item-btn" data-index="${index}">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        `;
+                        cartItemsContainer.appendChild(itemElement);
+                    });
+                    clearCartBtn.classList.remove('hidden');
+                }
+                updateCartTotal();
+            };
+
+            const updateCartCounter = () => {
+                const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+                CART_COUNTER.textContent = totalItems;
+                if (totalItems > 0) {
+                    CART_COUNTER.classList.remove('hidden');
+                } else {
+                    CART_COUNTER.classList.add('hidden');
+                }
+            };
+
+            const openCartModal = () => {
+                if (currentCartModal) {
+                    currentCartModal.remove();
+                }
+
+                currentCartModal = document.createElement('div');
+                currentCartModal.className = `modal-overlay`;
+                currentCartModal.style.display = 'flex';
+                currentCartModal.innerHTML = `
+                    <div class="modal-content">
+                        <button class="modal-close-btn">&times;</button>
+                        <h4 class="text-2xl font-bold text-gray-800 mb-6 text-center">سلة المشتريات</h4>
+                        <button id="clear-cart-btn" class="text-sm text-red-500 hover:text-red-700 transition-colors mb-4 block text-center w-full">حذف الكل</button>
+                        <div id="cart-items" class="space-y-4 max-h-80 overflow-y-auto mb-6">
+                            <!-- Cart items will be injected here by JavaScript -->
+                        </div>
+                        <div id="cart-totals" class="border-t pt-4 space-y-2 text-gray-700">
+                            <p class="flex justify-between items-center text-lg font-semibold">
+                                <span>المجموع الفرعي:</span>
+                                <span id="subtotal-price" class="text-amber-500 font-bold">0.000 د.ب</span>
+                            </p>
+                            <div class="flex items-center justify-between space-x-2 space-x-reverse">
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="add-delivery" checked class="form-checkbox h-5 w-5 text-amber-500 rounded-md">
+                                    <label for="add-delivery" class="mr-2 text-sm text-gray-600 select-none">أضف سعر التوصيل (2.000 د.ب)</label>
+                                </div>
+                                <span id="delivery-price" class="text-gray-500 text-sm">2.000 د.ب</span>
+                            </div>
+                            <p class="flex justify-between items-center text-2xl font-bold mt-4 pt-4 border-t">
+                                <span>المجموع النهائي:</span>
+                                <span id="final-price" class="text-amber-600">0.000 د.ب</span>
+                            </p>
+                        </div>
+                        <button id="send-whatsapp-btn" class="mt-6 w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full transition-transform transform hover:scale-105">
+                            إرسال الطلب عبر واتساب
+                        </button>
+                    </div>
+                `;
+                document.body.appendChild(currentCartModal);
+
+                // Add event listeners to the new modal's elements
+                currentCartModal.querySelector('.modal-close-btn').addEventListener('click', () => currentCartModal.remove());
+                currentCartModal.addEventListener('click', (e) => {
+                    if (e.target === currentCartModal) {
+                        currentCartModal.remove();
+                    }
+                });
+
+                currentCartModal.querySelector('#add-delivery').addEventListener('change', updateCartTotal);
+                currentCartModal.querySelector('#clear-cart-btn').addEventListener('click', () => {
+                    if (cart.length > 0) {
+                        cart = [];
+                        renderCart();
+                        updateCartCounter();
+                        showSingleMessage("تم حذف جميع المنتجات من السلة.");
+                    }
+                });
+
+                currentCartModal.querySelector('#send-whatsapp-btn').addEventListener('click', () => {
+                    if (cart.length === 0) {
+                        showSingleMessage("السلة فارغة. يرجى إضافة منتجات قبل إرسال الطلب.");
+                        return;
+                    }
+
+                    let message = `مرحباً، أود طلب المنتجات التالية:\n\n`;
+                    const subtotal = cart.reduce((total, item) => {
+                        message += `* ${item.name} (الكمية: ${item.quantity}) - السعر: ${(item.price * item.quantity).toFixed(3)} د.ب\n`;
+                        return total + (item.price * item.quantity);
+                    }, 0);
+
+                    const finalTotal = subtotal + (currentCartModal.querySelector('#add-delivery').checked ? DELIVERY_FEE : 0);
+                    message += `\nالمجموع الفرعي: ${subtotal.toFixed(3)} د.ب\n`;
+                    if (currentCartModal.querySelector('#add-delivery').checked) {
+                         message += `سعر التوصيل: ${DELIVERY_FEE.toFixed(3)} د.ب\n`;
+                         message += `*المجموع النهائي (شامل التوصيل):* ${finalTotal.toFixed(3)} د.ب\n\n`;
+                    } else {
+                         message += `*المجموع النهائي:* ${finalTotal.toFixed(3)} د.ب\n\n`;
+                    }
+                   
+                    message += `شكراً لكم.`;
+
+                    const encodedMessage = encodeURIComponent(message);
+                    window.open(`https://wa.me/97335561833?text=${encodedMessage}`, '_blank');
+                });
+
+                currentCartModal.querySelector('#cart-items').addEventListener('click', (e) => {
+                    const target = e.target;
+                    const button = target.closest('button');
+                    if (!button) return;
+
+                    const index = parseInt(button.dataset.index);
+                    if (button.classList.contains('increase-qty')) {
+                        if (cart[index]) {
+                            cart[index].quantity++;
+                            renderCart();
+                            updateCartCounter();
+                        }
+                    } else if (button.classList.contains('decrease-qty')) {
+                        if (cart[index] && cart[index].quantity > 1) {
+                            cart[index].quantity--;
+                            renderCart();
+                            updateCartCounter();
+                        } else if (button.classList.contains('decrease-qty') && cart[index].quantity === 1) {
+                            cart.splice(index, 1);
+                            renderCart();
+                            updateCartCounter();
+                        }
+                    } else if (button.classList.contains('delete-item-btn')) {
+                        cart.splice(index, 1);
+                        renderCart();
+                        updateCartCounter();
+                    }
+                });
+
+                renderCart();
+            };
+
+            // Event listeners for cart buttons
+            CART_BTN.addEventListener('click', openCartModal);
+
+            ADD_TO_CART_BTNS.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const productCard = e.currentTarget.closest('[data-product]');
+                    const productName = productCard.dataset.product;
+                    let productPrice;
+                    let productFullName = productName;
+
+                    const sizeSelector = productCard.querySelector('input[type="radio"]:checked');
+                    if (sizeSelector) {
+                        productPrice = parseFloat(sizeSelector.value);
+                        productFullName = `${productName} (${sizeSelector.dataset.size-name})`;
+                    } else {
+                        productPrice = parseFloat(productCard.dataset.price);
+                    }
+
+                    const existingItem = cart.find(item => item.name === productFullName);
+                    if (existingItem) {
+                        existingItem.quantity++;
+                    } else {
+                        cart.push({ name: productFullName, price: productPrice, quantity: 1 });
+                    }
+                    updateCartCounter();
+                    
+                    // Show the new modal with the updated message
+                    showAddedToCartMessage();
+                });
+            });
+        });
+
+        // Simple alert replacement for a better user experience
+        function showSingleMessage(message) {
+            const modal = document.createElement('div');
+            modal.className = `fixed inset-0 flex items-center justify-center z-[1001] bg-black bg-opacity-30 backdrop-blur-sm`;
+            modal.innerHTML = `
+                <div class="bg-white p-6 rounded-xl shadow-2xl max-w-sm w-full text-center">
+                    <p class="text-gray-800 text-lg mb-4">${message}</p>
+                    <button onclick="this.closest('.fixed').remove();" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-6 rounded-full transition-colors">
+                        موافق
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        // A new message box with the desired text
+        function showAddedToCartMessage() {
+            const modal = document.createElement('div');
+            modal.className = `fixed inset-0 flex items-center justify-center z-[1001] bg-black bg-opacity-30 backdrop-blur-sm`;
+            modal.innerHTML = `
+                <div class="bg-white p-6 rounded-xl shadow-2xl max-w-sm w-full text-center">
+                    <p class="text-gray-800 text-lg mb-6 font-semibold">
+                        تمت إضافة المنتج بنجاح.
+                        <br>
+                        انتقل إلى عربة التسوق لتحديد عدد المنتجات.
+                    </p>
+                    <div class="flex flex-col space-y-3">
+                        <button id="goToCartBtn" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-6 rounded-full transition-colors">
+                            انتقل إلى عربة التسوق
+                        </button>
+                        <button id="continueShoppingBtn" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-3 px-6 rounded-full transition-colors">
+                            متابعة التسوق
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+
+            document.getElementById('continueShoppingBtn').addEventListener('click', () => {
+                modal.remove();
+            });
+            document.getElementById('goToCartBtn').addEventListener('click', () => {
+                modal.remove();
+                // We will now call the function to open the main cart modal
+                const openCartBtn = document.getElementById('cart-btn');
+                openCartBtn.click();
+            });
+        }
+    </script>
+
+</body>
+</html>
