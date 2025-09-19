@@ -36,6 +36,9 @@
             width: 90%;
             text-align: right;
             position: relative;
+            /* Added for scrolling modal content independently */
+            max-height: 90%; 
+            overflow-y: auto;
         }
         .modal-close-btn {
             position: absolute;
@@ -584,6 +587,9 @@
                     currentCartModal.remove();
                 }
 
+                // منع التمرير في الصفحة الخلفية
+                document.body.style.overflow = 'hidden';
+
                 currentCartModal = document.createElement('div');
                 currentCartModal.className = `modal-overlay`;
                 currentCartModal.style.display = 'flex';
@@ -658,10 +664,16 @@
                 document.body.appendChild(currentCartModal);
 
                 // Add event listeners to the new modal's elements
-                currentCartModal.querySelector('.modal-close-btn').addEventListener('click', () => currentCartModal.remove());
+                const closeCartModal = () => {
+                    currentCartModal.remove();
+                    // إعادة تفعيل التمرير في الصفحة الخلفية
+                    document.body.style.overflow = '';
+                };
+                
+                currentCartModal.querySelector('.modal-close-btn').addEventListener('click', closeCartModal);
                 currentCartModal.addEventListener('click', (e) => {
                     if (e.target === currentCartModal) {
-                        currentCartModal.remove();
+                        closeCartModal();
                     }
                 });
                 
@@ -794,7 +806,7 @@
                     const sizeSelector = productCard.querySelector('input[type="radio"]:checked');
                     if (sizeSelector) {
                         productPrice = parseFloat(sizeSelector.value);
-                        productFullName = `${productName} (${sizeSelector.dataset.sizeName})`;
+                        productFullName = `${productName} (${sizeSelector.dataset.size-name})`;
                     } else {
                         productPrice = parseFloat(productCard.dataset.price);
                     }
