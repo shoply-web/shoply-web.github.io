@@ -83,12 +83,14 @@
         }
         .ratings-card {
             max-height: 0;
+            opacity: 0;
             overflow: hidden;
-            transition: max-height 0.5s ease-out;
+            transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
         }
         .ratings-card.open {
             max-height: 500px; /* A value larger than the content to allow smooth transition */
-            transition: max-height 0.5s ease-in;
+            opacity: 1;
+            transition: max-height 0.5s ease-in, opacity 0.5s ease-in;
         }
     </style>
 </head>
